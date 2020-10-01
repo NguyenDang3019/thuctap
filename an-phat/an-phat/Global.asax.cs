@@ -29,8 +29,7 @@ namespace an_phat
                
                     if (!WebMatrix.WebData.WebSecurity.Initialized)
                     {
-                        WebSecurity.InitializeDatabaseConnection("AnPhatDB", "Users", "ID", "UserName", true);
-                       
+                        WebSecurity.InitializeDatabaseConnection("AnPhatDB", "Users", "ID", "Email", true);  
                     }
                 
                

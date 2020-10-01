@@ -1,5 +1,9 @@
 ﻿
 @model an_phat.Models.LoginModel
+@{ 
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
 <div class="container" id="login">
     <!--title-->
     <div class="title-box-center wow ">
@@ -14,20 +18,21 @@
             @using (Html.BeginForm("Login","Home", FormMethod.Post,
                                          new { enctype = "multipart/form-data" }))
             {
+              @Html.ValidationSummary(true, "", new {@class = "text-danger" })
                 <table class="login-form">
                     <tr id="user">
-                        <td class="mail">User Name:</td>
-                        <td class="col-md-10">
-                            @Html.TextBoxFor(x => x.UserName, new { @id = "email", @size = "35", @name = "UserEmail" })
-                            @Html.ValidationMessageFor(x => x.UserName, String.Empty, new { @class = "text-danger" })
+                        <td class="mail">Email: </td>
+                        <td>
+                            @Html.TextBoxFor(x => x.Email, new { @id = "email", @size = "35", @name = "UserEmail" })
+                            @Html.ValidationMessageFor(x => x.Email, String.Empty, new{ @class = "text-danger", @style="font-size = 10px;" })
 
                         </td>
                     </tr>
                     <tr id="pass">
-                        <td><p class="pass">Password:</p></td>
-                        <td class="col-md-10">
+                        <td><p class="pass">Password: </p></td>
+                        <td>
                             @Html.PasswordFor(x => x.UserPassword, new { @id = "password", @size = "35", @name = "UserPassword" })
-                            @Html.ValidationMessageFor(x => x.UserPassword ,String.Empty, new{ @class = "text-danger" })
+                            @Html.ValidationMessageFor(x => x.UserPassword ,String.Empty, new{ @class = "text-danger", @style="font-size = 10px;" })
 
 
                         </td>
@@ -67,6 +72,11 @@
                 <a href="#">
                     <img src="~/Images/login/log-in-with-facebook.jpg" />
                 </a>
+            </div>
+            <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+            </fb:login-button>
+
+            <div id="status">
             </div>
         </div>
     </div>

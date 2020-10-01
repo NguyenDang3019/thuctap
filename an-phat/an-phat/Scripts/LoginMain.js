@@ -1,62 +1,49 @@
 ﻿//LOGIN FB
-//[1] Load các thành phần cần thiết
-window.fbAsyncInit = function () {
-    FB.init({
-        appId: '3062992443809180',
-        cookie: true,
-        xfbml: true,
-        version: 'v8.0'
-    });
-
-    FB.AppEvents.logPageView();
-    
-    FB.getLoginStatus(function (response) {
-        statusChangeCallback(response);
-    });
-
-};
-
-(function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) { return; }
-    js = d.createElement(s); js.id = id;
-    js.src = "https://connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-
-
-//[2] Xử lý trạng thái đăng nhập
-function statusChangeCallback(response) {  
-    console.log('statusChangeCallback');
-    console.log(response);                   
+//[1] Hàm kiểm tra trạng thái đăng nhập
+function statusChangeCallback(response) {             
     if (response.status === 'connected') {
         testAPI();
     } else {
-        alert('login di');
+        document.getElementById('status').innerHTML = 'Please log ' +
+            'into this webpage.';
     }
 }
 
-//[3] Yêu cầu đăng nhập FB
-function RequestLoginFB() {
-    window.location = 'https://graph.facebook.com/oauth/authorize?client_id=3062992443809180&scope=public_profile,email&redirect_uri=https://localhost:44336/'
+//[2] Hàm dùng cho button login
+function checkLoginState() {               // Called when a person is finished with the Login Button.
+    FB.getLoginStatus(function (response) {   // See the onlogin handler
+        statusChangeCallback(response);
+    });
 }
 
-//[4] API
-function testAPI() {
-    FB.api(
-        '/me',
-        'GET',
-        { "fields": "id,name,email" },
-        function (response) {
-            alert('Hello  ' + response.name + ' Email: ' + response.email + ' ID:  ' + response.id);
-        }
-    );
+//[3] Các thành phần của ứng dụng
+window.fbAsyncInit = function () {
+    FB.init({
+        appId: '2884515071779060',
+        cookie: true,                     // Enable cookies to allow the server to access the session.
+        xfbml: true,                     // Parse social plugins on this webpage.
+        version: 'v8.0'           // Use this Graph API version for this call.
+    });
+
+
+    FB.getLoginStatus(function (response) {   // Called after the JS SDK has been initialized.
+        statusChangeCallback(response);        // Returns the login status.
+    });
+};
+
+//[4] Hàm xử lý
+function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+    FB.api('/me', function (response) {
+        // chuỗi xử lý ở đây
+        document.getElementById('status').innerHTML =
+            'Thanks for logging in, ' + response.name + '!';
+    });
 }
 
 
 //END LOGIN FB------------------------------------
 
-//Login Google====================
+/*//Login Google====================
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -64,6 +51,6 @@ function onSignIn(googleUser) {
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     alert('Email: ' + profile.getEmail());
-}
+}*/
 
     //button G

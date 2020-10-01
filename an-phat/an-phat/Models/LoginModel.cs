@@ -12,9 +12,9 @@ namespace an_phat.Models
 {
     public class LoginModel
     {
-        [Required(ErrorMessage = "Vui lòng nhập tên đăng nhập")]
-        public string UserName { get; set; }
-        [Required (ErrorMessage = "Vui lòng nhập mật khẩu")]
+        [Required(ErrorMessage = "Vui lòng nhập Email")]
+        public string Email { get; set; }
+        [Required (ErrorMessage = "Vui lòng nhập Password")]
         public String UserPassword { get; set; }
 
     }

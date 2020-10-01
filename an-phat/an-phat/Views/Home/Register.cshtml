@@ -7,7 +7,8 @@
                 <h2 class="h-title"> ĐĂNG KÝ </h2>
             </div>
         </div>
-        @using (Html.BeginForm("Register", "Home"))
+        @using (Html.BeginForm("Register", "Home",FormMethod.Post,
+                                         new { enctype = "multipart/form-data" }))
         {
             <table width="100%" id="register">
                 <tr>
@@ -19,7 +20,7 @@
                                     @Html.TextBoxFor(x => x.UserEmail, new { @id = "email", @size = "20",
                                    @value = "", @onkeyup = "check_user_email(this.value)", @name = "UserEmail"
                                })
-                                    @Html.ValidationMessageFor(x => x.UserName)
+                                    @Html.ValidationMessageFor(x => x.UserEmail)
                                     <b style="color: #ff0000;">*</b>
                                     <span id="check_user"></span>
                                 </td>
@@ -56,12 +57,12 @@
                                 <td>Giới tính</td>
                                 <td class="gender-navbar">
                                     <div class="gender_tab">
-                                        @Html.RadioButtonFor(m => m.Gender, "Nam", new { Checked = "checked", value = "1", @class = "gender", @name = "Nam" })Nam
+                                        @Html.RadioButtonFor(m => m.Gender, "true", new { Checked = "checked", @class = "gender", @name = "Nam" })Nam
                                         
                                    
                                     </div>
                                     <div class="gender_tab">
-                                        @Html.RadioButtonFor(m => m.Gender, "Nữ", new { Checked = "checked", value = "0", @class = "gender", @name = "Nam" })Nữ
+                                        @Html.RadioButtonFor(m => m.Gender, "false", new { Checked = "checked", @class = "gender", @name = "Nam" })Nữ
 
                                     </div>
                                 </td>
@@ -69,16 +70,23 @@
                             <tr>
                                 <td>Tỉnh/Tp</td>
                                 <td>
-                                    @Html.DropDownList("NameDistrict", new SelectList(ViewBag.DistrictList, "ID", "NameDistrict"), new { @name = "NameDistrict" })
+                                    @Html.DropDownListFor(m => m.DistrictID, Model.DistrictLlist ?? new List<SelectListItem>())
+
                                 </td>
                             </tr>
                             <tr>
                                 <td>Địa chỉ nhận hàng</td>
-                                <td><input type="text" name="info[address]" id="address" class="boxInput" size="50" value="" /></td>
+                                <td>
+                                    @Html.TextBoxFor(x => x.Address, new { @id = "address", @class = "boxInput", @size = "40" })
+                                  
+                                </td>
                             </tr>
                             <tr>
                                 <td>Điện thoại di động</td>
-                                <td><input type="text" name="info[mobile]" id="mobile" class="boxInput" size="40" value="" /></td>
+                                <td>
+                                    @Html.TextBoxFor(x => x.PhoneNumber, new { @id = "mobile", @class = "boxInput", @size = "40" })
+                                    @Html.ValidationMessageFor(x => x.PhoneNumber)
+                                </td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -99,4 +107,5 @@
             </table>
         }
         </div>
+
 </div>
